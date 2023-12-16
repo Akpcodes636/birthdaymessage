@@ -1,0 +1,20 @@
+@import "./elements/TypingDot/typingdot.css";
+
+@import "./container/message/message.css";
+@import "./container/wishings/wishings.css";
+@import "./container/footer/footer.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&display=swap");
+
+body {
+  transition-duration: 0.5s;
+  background-color: black;
+  color: white;
+  font-size: x-large;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+}
+
+.hide {
+  display: none;
+}
