@@ -1,46 +1,36 @@
-import React, { useState, useEffect, useRef } from "react";
-import Message from "../../container/message/message";
-import TypingDot from "../TypingDot/typingdot";
+import React, { useState, useEffect } from "react";
 
+import TypingDot from "../TypingDot/typingdot.jsx";
+import Message from "../../container/message/message.jsx";
 
-const Transition = ({ id, message, delay, threshold = 0.5 }) => {
-  const ref = useRef(null);
-  const [inView, setInView] = useState(false);
+const Transition = (props) => {
+  const [showTyping, setShowTyping] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
+  const [date, setDate] = useState(new Date().getTime());
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        setInView(entries[0].isIntersecting);
-      },
-      { threshold }
-    );
-    observer.observe(ref.current);
+    const timerID = setInterval(() => {
+      setDate(new Date().getTime());
+    }, 100);
+
+    return () => {
+      clearInterval(timerID);
+    };
   }, []);
 
+  useEffect(() => {
+    setShowTyping(date < props.start + 1800);
+
+    // Show the message when typing is complete
+    if (!showTyping) {
+      setShowMessage(true);
+    }
+  }, [date, props.start, showTyping]);
+
   return (
-    <div className="transition" ref={ref}>
-      {inView && (
-        <>
-          <div
-            style={{
-              animation: `fade-in ${delay}s ease-in-out`,
-              opacity: inView ? 1 : 0,
-              pointerEvents: inView ? "auto" : "none",
-            }}
-          >
-            <TypingDot />
-          </div>
-          <div
-            style={{
-              animation: `bounce-left ${delay}s ease-in-out`,
-              opacity: inView ? 1 : 0,
-              pointerEvents: inView ? "auto" : "none",
-            }}
-          >
-            <Message id={id} message={message} />
-          </div>
-        </>
-      )}
+    <div className="transition">
+      {showTyping && <TypingDot />}
+      {showMessage && <Message id={props.id} message={props.message} />}
     </div>
   );
 };

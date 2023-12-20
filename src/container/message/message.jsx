@@ -1,4 +1,5 @@
 
+import Messages from "../../../message.js"
 
 const Message = ({ id, message }) => {
   return (
@@ -8,4 +9,5 @@ const Message = ({ id, message }) => {
   );
 };
 
+console.log(Message);
 export default Message;

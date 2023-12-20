@@ -1,7 +1,9 @@
-import { Messages } from "../../../message.js";
+import  Messages  from "../../../message.js";
 import Transition from "../../elements/Transition/transition.jsx";
 
 const Wishings = () => {
+  console.log(typeof Messages);
+  console.log(Messages);
   return (
     <div className="wishings-div">
       {Messages.map((message) => {
